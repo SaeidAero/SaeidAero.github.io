@@ -10,6 +10,23 @@ body {
   color: #30251f;
 }
 
+button,
+input {
+  font: inherit;
+}
+
+button {
+  border: none;
+  border-radius: 9px;
+  padding: 12px 15px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
 .header {
   background: #b83227;
   color: white;
@@ -17,22 +34,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
   flex-wrap: wrap;
+  gap: 12px;
 }
 
 .header h1 {
   margin: 0;
   font-size: 24px;
-}
-
-button {
-  border: 0;
-  border-radius: 9px;
-  padding: 12px 16px;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: bold;
 }
 
 #cart-button {
@@ -44,13 +52,14 @@ button {
   display: inline-block;
   background: #ffd166;
   color: #30251f;
-  padding: 3px 8px;
   border-radius: 20px;
+  padding: 3px 9px;
   margin-right: 5px;
 }
 
 .container {
-  width: min(1100px, 94%);
+  width: 94%;
+  max-width: 1100px;
   margin: 25px auto;
 }
 
@@ -66,8 +75,8 @@ h2 {
 
 .product {
   background: white;
-  border-radius: 14px;
   padding: 15px;
+  border-radius: 14px;
   box-shadow: 0 3px 12px #00000012;
   text-align: center;
 }
@@ -81,18 +90,18 @@ h2 {
 
 .product input {
   display: block;
-  width: 80px;
-  margin: 8px auto 12px;
+  width: 90px;
   padding: 8px;
-  font-size: 16px;
+  margin: 8px auto 12px;
   text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 7px;
 }
 
-.add-button,
-#checkout-button {
+.add-button {
+  width: 100%;
   background: #238636;
   color: white;
-  width: 100%;
 }
 
 #cart-section {
@@ -100,6 +109,7 @@ h2 {
   padding: 18px;
   border-radius: 14px;
   margin-top: 20px;
+  box-shadow: 0 3px 12px #00000012;
 }
 
 #cart-section[hidden] {
@@ -112,12 +122,16 @@ h2 {
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  padding: 14px 0;
   border-bottom: 1px solid #eee;
+  padding: 14px 0;
+}
+
+.cart-item p {
+  margin-bottom: 0;
 }
 
 .cart-item button {
-  padding: 7px 12px;
+  padding: 8px 12px;
   margin: 3px;
 }
 
@@ -127,18 +141,26 @@ h2 {
 }
 
 .total {
-  line-height: 2.2;
-  font-size: 18px;
-  margin: 20px 0;
   background: #fff2df;
   padding: 12px;
   border-radius: 10px;
+  margin: 20px 0;
+  font-size: 18px;
+}
+
+.total p {
+  margin: 8px 0;
 }
 
 .cart-actions {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 10px;
+}
+
+#checkout-button {
+  background: #238636;
+  color: white;
 }
 
 #clear-button {
@@ -155,6 +177,7 @@ h2 {
   text-align: center;
   color: #238636;
   font-weight: bold;
+  line-height: 1.8;
 }
 
 footer {
@@ -170,5 +193,9 @@ footer {
 
   .header h1 {
     font-size: 21px;
+  }
+
+  .cart-item {
+    align-items: flex-start;
   }
 }
