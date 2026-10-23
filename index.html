@@ -4,10 +4,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>سایت من</title>
+  <title>سعید آیرو | سفارش غذا</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <h1>سلام! به سایت من خوش آمدی</h1>
-  <p>من دارم اولین سایت خودم را می‌سازم.</p>
+
+  <header class="header">
+    <div>
+      <h1>🍔 Saeid Airo</h1>
+      <p>غذای خوشمزه، انتخاب تو!</p>
+    </div>
+    <button class="cart-button" id="cart-button">
+      🛒 سبد خرید <span id="cart-count">۰</span>
+    </button>
+  </header>
+
+  <main>
+    <section class="welcome">
+      <h2>به رستوران ما خوش آمدی!</h2>
+      <p>غذای مورد علاقه‌ات را انتخاب کن.</p>
+    </section>
+
+    <h2 class="section-title">🍕 منوی غذاها</h2>
+
+    <section class="products">
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=80" alt="برگر">
+        <div class="product-info">
+          <h3>🍔 برگر مخصوص</h3>
+          <p>برگر خوشمزه با پنیر</p>
+          <strong>۸ یورو</strong>
+          <label for="qty-burger">تعداد:</label>
+          <input id="qty-burger" type="number" min="1" max="99" value="1">
+          <button class="add-button" data-product="burger">افزودن به سبد خرید</button>
+        </div>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=700&q=80" alt="پیتزا">
+        <div class="product-info">
+          <h3>🍕 پیتزا مخصوص</h3>
+          <p>پیتزای پنیر و گوجه</p>
+          <strong>۱۲ یورو</strong>
+          <label for="qty-pizza">تعداد:</label>
+          <input id="qty-pizza" type="number" min="1" max="99" value="1">
+          <button class="add-button" data-product="pizza">افزودن به سبد خرید</button>
+        </div>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=700&q=80" alt="سیب زمینی سرخ کرده">
+        <div class="product-info">
+          <h3>🍟 سیب‌زمینی</h3>
+          <p>سیب‌زمینی ترد و داغ</p>
+          <strong>۴ یورو</strong>
+          <label for="qty-fries">تعداد:</label>
+          <input id="qty-fries" type="number" min="1" max="99" value="1">
+          <button class="add-button" data-product="fries">افزودن به سبد خرید</button>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="cart-section" id="cart-section">
+      <h2>🛒 سبد خرید شما</h2>
+      <div id="cart-items">
+        <p>هنوز غذایی انتخاب نکرده‌ای.</p>
+      </div>
+      <div class="total">
+        مبلغ کل: <span id="cart-total">۰</span> یورو
+      </div>
+      <button id="clear-cart" class="clear-button">خالی کردن سبد خرید</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>ساخته شده با ❤️ توسط Saeid Airo</p>
+  </footer>
+
 </body>
 </html>
