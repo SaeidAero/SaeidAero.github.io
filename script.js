@@ -1,480 +1,221 @@
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, Tahoma, sans-serif;
-  color: #29251f;
-  background: #fffaf4;
-  line-height: 1.7;
-}
-
-button,
-input {
-  font: inherit;
-}
-
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-}
-
-button {
-  cursor: pointer;
-}
-
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: #fff;
-  border-bottom: 1px solid #f0e5da;
-  padding: 12px 5%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: inherit;
-  text-decoration: none;
-}
-
-.brand-icon {
-  font-size: 36px;
-}
-
-.brand strong,
-.brand small {
-  display: block;
-}
-
-.brand strong {
-  font-size: 19px;
-}
-
-.brand small {
-  color: #82776c;
-  font-size: 12px;
-}
-
-.cart-button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: #29251f;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 10px 15px;
-  font-weight: bold;
-}
-
-.cart-badge {
-  background: #f6b83f;
-  color: #29251f;
-  border-radius: 50px;
-  min-width: 25px;
-  padding: 0 6px;
-  text-align: center;
-}
-
-.hero {
-  padding: 65px 20px;
-  text-align: center;
-  background: linear-gradient(135deg, #fff0d5, #ffe1b4);
-}
-
-.hero-label {
-  display: inline-block;
-  padding: 5px 13px;
-  background: white;
-  border-radius: 30px;
-  color: #a64222;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-.hero h1 {
-  margin: 16px 0 8px;
-  font-size: clamp(28px, 5vw, 44px);
-  line-height: 1.4;
-}
-
-.hero p {
-  color: #65574a;
-  margin: 0 auto 22px;
-}
-
-.menu-link {
-  display: inline-block;
-  background: #a92d22;
-  color: white;
-  text-decoration: none;
-  padding: 11px 24px;
-  border-radius: 10px;
-  font-weight: bold;
-}
-
-.menu-section {
-  max-width: 1120px;
-  padding: 38px 18px;
-  margin: auto;
-}
-
-.menu-section > h2,
-.section-description {
-  text-align: center;
-}
-
-.menu-section > h2 {
-  font-size: 28px;
-  margin-bottom: 0;
-}
-
-.section-description {
-  color: #81766b;
-  margin-top: 4px;
-}
-
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 22px;
-  margin-top: 28px;
-}
-
-.product-card {
-  background: #fff;
-  border: 1px solid #f0e6dc;
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 5px 20px #59391b0c;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.product-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 28px #59391b18;
-}
-
-.image-wrap {
-  position: relative;
-  height: 205px;
-  background: #f6e7d5;
-  overflow: hidden;
-}
+const products = {
+  burger: { name: "برگر مخصوص", price: 8, input: "qty-burger" },
+  pizza: { name: "پیتزا مخصوص", price: 12, input: "qty-pizza" },
+  fries: { name: "سیب‌زمینی سرخ‌کرده", price: 4, input: "qty-fries" }
+};
 
-.image-wrap img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-}
-
-.image-fallback {
-  display: none;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  font-size: 80px;
-  background: linear-gradient(135deg, #ffe5bd, #f6c78c);
-}
-
-.product-info {
-  padding: 17px;
-}
-
-.food-tag {
-  display: inline-block;
-  background: #fff0d8;
-  color: #9c4a19;
-  padding: 2px 9px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-
-.product-info h3 {
-  margin: 8px 0 3px;
-  font-size: 19px;
-}
-
-.product-info p {
-  color: #82776c;
-  font-size: 13px;
-  margin: 0 0 15px;
-}
-
-.product-bottom {
-  display: grid;
-  grid-template-columns: auto 1fr 65px;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-
-.price {
-  color: #a92d22;
-  font-size: 21px;
-  white-space: nowrap;
-}
-
-.quantity-label {
-  font-size: 13px;
-  color: #6c6258;
-}
-
-.product-bottom input {
-  width: 65px;
-  min-width: 0;
-  padding: 8px 4px;
-  text-align: center;
-  border: 1px solid #e2d7cb;
-  border-radius: 8px;
-  background: #fffdfb;
-}
-
-.add-button,
-.checkout-button {
-  width: 100%;
-  border: none;
-  border-radius: 10px;
-  padding: 12px;
-  font-weight: bold;
-  transition: background 0.2s;
-}
-
-.add-button {
-  background: #20834c;
-  color: white;
-}
-
-.add-button:hover {
-  background: #17683b;
-}
-
-.cart-section {
-  max-width: 800px;
-  margin: 10px auto 45px;
-  padding: 22px;
-  background: white;
-  border: 1px solid #eee2d6;
-  border-radius: 18px;
-  box-shadow: 0 8px 30px #59391b10;
-  scroll-margin-top: 90px;
-}
-
-.cart-section[hidden],
-.cart-summary[hidden] {
-  display: none !important;
-}
-
-.cart-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.cart-heading h2 {
-  margin: 0;
-}
-
-.cart-heading .section-description {
-  text-align: right;
-  margin-bottom: 12px;
-}
+const cart = {};
+const money = number => number.toLocaleString("fa-IR");
 
-.icon-button {
-  width: 40px;
-  height: 40px;
-  border: none;
-  border-radius: 10px;
-  background: #f5eee7;
-}
-
-.empty-cart {
-  padding: 24px 10px;
-  text-align: center;
-  color: #82776c;
-  background: #fffaf5;
-  border-radius: 12px;
-}
+const cartButton = document.getElementById("cart-button");
+const cartSection = document.getElementById("cart-section");
+const cartItems = document.getElementById("cart-items");
+const cartCount = document.getElementById("cart-count");
+const cartTotal = document.getElementById("cart-total");
+const summaryCount = document.getElementById("summary-count");
+const cartSummary = document.getElementById("cart-summary");
+const toast = document.getElementById("toast");
 
-.empty-cart span {
-  display: block;
-  font-size: 42px;
-  margin-bottom: 8px;
-}
+let toastTimer;
 
-.cart-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 12px;
-  padding: 16px 0;
-  border-bottom: 1px solid #f0e7de;
-}
+function showMessage(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
 
-.cart-product-name {
-  font-weight: bold;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2500);
 }
 
-.cart-product-price {
-  color: #8c7d70;
-  font-size: 13px;
+function getTotalQuantity() {
+  return Object.values(cart).reduce((sum, quantity) => sum + quantity, 0);
 }
 
-.cart-row-total {
-  font-weight: bold;
-  color: #a92d22;
-  text-align: left;
-  white-space: nowrap;
+function getTotalPrice() {
+  return Object.entries(cart).reduce((sum, [id, quantity]) => {
+    return sum + products[id].price * quantity;
+  }, 0);
 }
 
-.cart-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 8px;
-  flex-wrap: wrap;
-}
+function openCart() {
+  cartSection.hidden = false;
+  renderCart();
 
-.cart-controls button {
-  min-width: 32px;
-  min-height: 32px;
-  border: none;
-  border-radius: 7px;
-  background: #f3eee8;
+  cartSection.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
 }
 
-.cart-controls .remove-button {
-  padding: 4px 10px;
-  color: #a92d22;
+function closeCart() {
+  cartSection.hidden = true;
+  document.getElementById("menu").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
 }
 
-.cart-summary {
-  padding-top: 18px;
-}
+document.querySelectorAll(".add-button").forEach(button => {
+  button.addEventListener("click", () => {
+    const id = button.dataset.product;
+    const input = document.getElementById(products[id].input);
+    const quantity = Number(input.value);
 
-.summary-line {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 7px 0;
-}
+    if (!Number.isInteger(quantity) || quantity < 1 || quantity > 99) {
+      showMessage("تعداد باید عددی بین ۱ تا ۹۹ باشد.");
+      input.focus();
+      return;
+    }
 
-.total-line {
-  border-top: 1px solid #eee2d6;
-  margin-top: 8px;
-  padding-top: 15px;
-  font-size: 22px;
-}
+    const newQuantity = (cart[id] || 0) + quantity;
 
-.total-line strong {
-  color: #a92d22;
-}
+    if (newQuantity > 99) {
+      showMessage("حداکثر تعداد هر غذا ۹۹ عدد است.");
+      return;
+    }
 
-.checkout-button {
-  margin-top: 14px;
-  background: #20834c;
-  color: white;
-}
+    cart[id] = newQuantity;
 
-.checkout-button:hover {
-  background: #17683b;
-}
+    renderCart();
+    showMessage(`${products[id].name} به سبد خرید اضافه شد.`);
+  });
+});
 
-.clear-button,
-.back-button {
-  width: 100%;
-  padding: 11px;
-  margin-top: 10px;
-  border-radius: 10px;
-  background: white;
-  border: 1px solid #e3d6c9;
-}
+function renderCart() {
+  const totalQuantity = getTotalQuantity();
+  const totalPrice = getTotalPrice();
 
-.clear-button {
-  color: #a92d22;
-}
+  cartCount.textContent = money(totalQuantity);
+  cartTotal.textContent = money(totalPrice);
+  summaryCount.textContent = money(totalQuantity);
 
-.back-button {
-  color: #51463b;
-}
+  cartItems.replaceChildren();
 
-footer {
-  padding: 22px;
-  background: #29251f;
-  color: #eee4d8;
-  text-align: center;
-  font-size: 13px;
-}
+  if (totalQuantity === 0) {
+    const empty = document.createElement("div");
+    empty.className = "empty-cart";
 
-.toast {
-  position: fixed;
-  z-index: 20;
-  bottom: 20px;
-  left: 50%;
-  transform: translate(-50%, 20px);
-  width: max-content;
-  max-width: calc(100% - 32px);
-  padding: 12px 18px;
-  border-radius: 12px;
-  background: #29251f;
-  color: white;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s, transform 0.2s;
-  text-align: center;
-}
+    const emoji = document.createElement("span");
+    emoji.textContent = "🛒";
 
-.toast.show {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
+    const message = document.createElement("p");
+    message.textContent = "سبد خریدت خالی است. از منو یک غذا انتخاب کن!";
 
-@media (max-width: 480px) {
-  .header {
-    padding: 10px 12px;
+    empty.append(emoji, message);
+    cartItems.appendChild(empty);
+    cartSummary.hidden = true;
+    return;
   }
 
-  .brand-icon {
-    font-size: 29px;
-  }
+  cartSummary.hidden = false;
 
-  .brand strong {
-    font-size: 16px;
-  }
+  Object.entries(cart).forEach(([id, quantity]) => {
+    if (quantity <= 0) return;
 
-  .cart-button {
-    padding: 9px 10px;
-    font-size: 13px;
-  }
+    const product = products[id];
+    const row = document.createElement("div");
+    row.className = "cart-row";
 
-  .hero {
-    padding: 48px 18px;
-  }
+    const details = document.createElement("div");
 
-  .products {
-    grid-template-columns: 1fr;
-  }
+    const name = document.createElement("div");
+    name.className = "cart-product-name";
+    name.textContent = product.name;
 
-  .image-wrap {
-    height: 220px;
-  }
+    const unitPrice = document.createElement("div");
+    unitPrice.className = "cart-product-price";
+    unitPrice.textContent = `قیمت هر عدد: ${money(product.price)} یورو`;
 
-  .cart-section {
-    margin: 10px 12px 35px;
-    padding: 16px;
-  }
+    const controls = document.createElement("div");
+    controls.className = "cart-controls";
+
+    const minus = document.createElement("button");
+    minus.type = "button";
+    minus.textContent = "−";
+    minus.setAttribute("aria-label", "کم کردن تعداد");
+
+    minus.addEventListener("click", () => {
+      cart[id]--;
+
+      if (cart[id] <= 0) {
+        delete cart[id];
+      }
+
+      renderCart();
+    });
+
+    const qty = document.createElement("span");
+    qty.textContent = `${money(quantity)} عدد`;
+
+    const plus = document.createElement("button");
+    plus.type = "button";
+    plus.textContent = "+";
+    plus.setAttribute("aria-label", "زیاد کردن تعداد");
+
+    plus.addEventListener("click", () => {
+      if (cart[id] >= 99) {
+        showMessage("حداکثر تعداد این غذا ۹۹ عدد است.");
+        return;
+      }
+
+      cart[id]++;
+      renderCart();
+    });
+
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "remove-button";
+    remove.textContent = "حذف";
+
+    remove.addEventListener("click", () => {
+      delete cart[id];
+      renderCart();
+      showMessage("غذا از سبد خرید حذف شد.");
+    });
+
+    controls.append(minus, qty, plus, remove);
+    details.append(name, unitPrice, controls);
+
+    const lineTotal = document.createElement("div");
+    lineTotal.className = "cart-row-total";
+    lineTotal.textContent =
+      `${money(product.price * quantity)} €`;
+
+    row.append(details, lineTotal);
+    cartItems.appendChild(row);
+  });
 }
+
+cartButton.addEventListener("click", () => {
+  if (cartSection.hidden) {
+    openCart();
+  } else {
+    closeCart();
+  }
+});
+
+document.getElementById("close-cart").addEventListener("click", closeCart);
+document.getElementById("back-to-menu").addEventListener("click", closeCart);
+
+document.getElementById("clear-cart").addEventListener("click", () => {
+  Object.keys(cart).forEach(id => delete cart[id]);
+  renderCart();
+  showMessage("سبد خرید خالی شد.");
+});
+
+document.getElementById("checkout-button").addEventListener("click", () => {
+  if (getTotalQuantity() === 0) {
+    showMessage("سبد خریدت خالی است.");
+    return;
+  }
+
+  alert(
+    "این بخش هنوز به درگاه پرداخت وصل نشده است.\n" +
+    "مبلغ سفارش: " + money(getTotalPrice()) + " یورو\n\n" +
+    "فعلاً هیچ پرداختی انجام نمی‌شود."
+  );
+});
+
+renderCart();
