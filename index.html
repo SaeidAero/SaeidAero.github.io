@@ -3,144 +3,73 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Saeid Airo | سفارش غذا</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فروشگاه غذای خوشمزه</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
   <header class="header">
-    <a class="brand" href="#menu">
-      <span class="brand-icon">🍔</span>
-      <span>
-        <strong>Saeid Airo</strong>
-        <small>طعم خوشمزه، حال خوب!</small>
-      </span>
-    </a>
-    <button class="cart-button" id="cart-button">
+    <h1>🍔 غذای خوشمزه</h1>
+    <button id="cart-button" type="button">
       🛒 سبد خرید
-      <span class="cart-badge" id="cart-count">۰</span>
+      <span id="cart-count">۰</span>
     </button>
   </header>
 
-  <main>
-    <section class="hero">
-      <span class="hero-label">خوشمزه و تازه</span>
-      <h1>امروز چی میل داری؟</h1>
-      <p>غذای مورد علاقه‌ات را انتخاب کن و به سبد خریدت اضافه کن.</p>
-      <a href="#menu" class="menu-link">دیدن منو ↓</a>
-    </section>
-
-    <section id="menu" class="menu-section">
-      <h2>🍽️ منوی ما</h2>
-      <p class="section-description">غذای دلخواهت را انتخاب کن.</p>
+  <main class="container">
+    <section id="menu-section">
+      <h2>منوی غذاها</h2>
 
       <div class="products">
-        <article class="product-card">
-          <div class="image-wrap">
-            <img
-              src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=85"
-              alt="برگر با پنیر"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
-            >
-            <div class="image-fallback">🍔</div>
-          </div>
-          <div class="product-info">
-            <span class="food-tag">محبوب</span>
-            <h3>برگر مخصوص</h3>
-            <p>برگر آبدار با پنیر و سبزیجات</p>
-            <div class="product-bottom">
-              <strong class="price">۸ €</strong>
-              <label class="quantity-label" for="qty-burger">تعداد</label>
-              <input id="qty-burger" type="number" min="1" max="99" value="1">
-            </div>
-            <button class="add-button" data-product="burger">+ افزودن به سبد</button>
-          </div>
+        <article class="product">
+          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=85" alt="برگر">
+          <h3>🍔 برگر</h3>
+          <p>قیمت هر عدد: ۸ یورو</p>
+          <label for="qty-burger">تعداد:</label>
+          <input id="qty-burger" type="number" min="1" max="99" value="1">
+          <button class="add-button" data-id="burger" type="button">افزودن به سبد خرید</button>
         </article>
 
-        <article class="product-card">
-          <div class="image-wrap">
-            <img
-              src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=85"
-              alt="پیتزای پنیر و گوجه"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
-            >
-            <div class="image-fallback">🍕</div>
-          </div>
-          <div class="product-info">
-            <span class="food-tag">تازه</span>
-            <h3>پیتزا مخصوص</h3>
-            <p>پیتزای داغ با پنیر و گوجه</p>
-            <div class="product-bottom">
-              <strong class="price">۱۲ €</strong>
-              <label class="quantity-label" for="qty-pizza">تعداد</label>
-              <input id="qty-pizza" type="number" min="1" max="99" value="1">
-            </div>
-            <button class="add-button" data-product="pizza">+ افزودن به سبد</button>
-          </div>
+        <article class="product">
+          <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=85" alt="پیتزا">
+          <h3>🍕 پیتزا</h3>
+          <p>قیمت هر عدد: ۱۲ یورو</p>
+          <label for="qty-pizza">تعداد:</label>
+          <input id="qty-pizza" type="number" min="1" max="99" value="1">
+          <button class="add-button" data-id="pizza" type="button">افزودن به سبد خرید</button>
         </article>
 
-        <article class="product-card">
-          <div class="image-wrap">
-            <img
-              src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=85"
-              alt="سیب‌زمینی سرخ‌کرده"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"
-            >
-            <div class="image-fallback">🍟</div>
-          </div>
-          <div class="product-info">
-            <span class="food-tag">کنار غذا</span>
-            <h3>سیب‌زمینی سرخ‌کرده</h3>
-            <p>ترد و خوشمزه</p>
-            <div class="product-bottom">
-              <strong class="price">۴ €</strong>
-              <label class="quantity-label" for="qty-fries">تعداد</label>
-              <input id="qty-fries" type="number" min="1" max="99" value="1">
-            </div>
-            <button class="add-button" data-product="fries">+ افزودن به سبد</button>
-          </div>
+        <article class="product">
+          <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=85" alt="سیب‌زمینی سرخ‌کرده">
+          <h3>🍟 سیب‌زمینی</h3>
+          <p>قیمت هر عدد: ۴ یورو</p>
+          <label for="qty-fries">تعداد:</label>
+          <input id="qty-fries" type="number" min="1" max="99" value="1">
+          <button class="add-button" data-id="fries" type="button">افزودن به سبد خرید</button>
         </article>
       </div>
     </section>
 
-    <section id="cart-section" class="cart-section" hidden>
-      <div class="cart-heading">
-        <div>
-          <h2>🛒 سبد خرید شما</h2>
-          <p class="section-description">سفارشت را بررسی کن.</p>
-        </div>
-        <button id="close-cart" class="icon-button" aria-label="بستن سبد">✕</button>
-      </div>
-
+    <section id="cart-section" hidden>
+      <h2>🛒 سبد خرید شما</h2>
       <div id="cart-items"></div>
 
-      <div id="cart-summary" class="cart-summary" hidden>
-        <div class="summary-line">
-          <span>تعداد کل غذاها</span>
-          <strong id="summary-count">۰</strong>
-        </div>
-        <div class="summary-line total-line">
-          <span>مبلغ کل</span>
-          <strong><span id="cart-total">۰</span> €</strong>
-        </div>
-
-        <button id="checkout-button" class="checkout-button">
-          ادامه برای پرداخت
-        </button>
-        <button id="clear-cart" class="clear-button">
-          خالی کردن سبد خرید
-        </button>
+      <div class="total">
+        تعداد کل: <strong id="total-count">۰</strong>
+        <br>
+        مبلغ کل: <strong id="total-price">۰ یورو</strong>
       </div>
 
-      <button id="back-to-menu" class="back-button">← برگشت به منو</button>
+      <div class="cart-actions">
+        <button id="checkout-button" type="button">ادامه و پرداخت</button>
+        <button id="clear-button" type="button">خالی کردن سبد</button>
+        <button id="back-button" type="button">بازگشت به منو</button>
+      </div>
+      <p id="message" role="status"></p>
     </section>
   </main>
 
-  <footer>
-    <p>ساخته شده با ❤️ | Saeid Airo</p>
-  </footer>
-
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <footer>با عشق برای دوستداران غذا ❤️</footer>
 </body>
 </html>
