@@ -5,10 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>فروشگاه غذای خوشمزه</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+
+  <!-- اتصال فایل CSS -->
+  <link rel="stylesheet" href="./style.css">
+
+  <!-- اتصال فایل JavaScript -->
+  <script src="./script.js" defer></script>
 </head>
 <body>
+
   <header class="header">
     <h1>🍔 غذای خوشمزه</h1>
     <button id="cart-button" type="button">
@@ -18,17 +23,21 @@
   </header>
 
   <main class="container">
+
     <section id="menu-section">
       <h2>منوی غذاها</h2>
 
       <div class="products">
+
         <article class="product">
           <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=85" alt="برگر">
           <h3>🍔 برگر</h3>
           <p>قیمت هر عدد: ۸ یورو</p>
           <label for="qty-burger">تعداد:</label>
           <input id="qty-burger" type="number" min="1" max="99" value="1">
-          <button class="add-button" data-id="burger" type="button">افزودن به سبد خرید</button>
+          <button class="add-button" data-id="burger" type="button">
+            افزودن به سبد خرید
+          </button>
         </article>
 
         <article class="product">
@@ -37,7 +46,9 @@
           <p>قیمت هر عدد: ۱۲ یورو</p>
           <label for="qty-pizza">تعداد:</label>
           <input id="qty-pizza" type="number" min="1" max="99" value="1">
-          <button class="add-button" data-id="pizza" type="button">افزودن به سبد خرید</button>
+          <button class="add-button" data-id="pizza" type="button">
+            افزودن به سبد خرید
+          </button>
         </article>
 
         <article class="product">
@@ -46,19 +57,22 @@
           <p>قیمت هر عدد: ۴ یورو</p>
           <label for="qty-fries">تعداد:</label>
           <input id="qty-fries" type="number" min="1" max="99" value="1">
-          <button class="add-button" data-id="fries" type="button">افزودن به سبد خرید</button>
+          <button class="add-button" data-id="fries" type="button">
+            افزودن به سبد خرید
+          </button>
         </article>
+
       </div>
     </section>
 
     <section id="cart-section" hidden>
       <h2>🛒 سبد خرید شما</h2>
+
       <div id="cart-items"></div>
 
       <div class="total">
-        تعداد کل: <strong id="total-count">۰</strong>
-        <br>
-        مبلغ کل: <strong id="total-price">۰ یورو</strong>
+        <p>تعداد کل: <strong id="total-count">۰</strong></p>
+        <p>مبلغ کل: <strong id="total-price">۰ یورو</strong></p>
       </div>
 
       <div class="cart-actions">
@@ -66,10 +80,13 @@
         <button id="clear-button" type="button">خالی کردن سبد</button>
         <button id="back-button" type="button">بازگشت به منو</button>
       </div>
-      <p id="message" role="status"></p>
+
+      <p id="message" role="status" aria-live="polite"></p>
     </section>
+
   </main>
 
   <footer>با عشق برای دوستداران غذا ❤️</footer>
+
 </body>
 </html>
