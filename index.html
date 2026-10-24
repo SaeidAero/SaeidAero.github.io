@@ -1,92 +1,113 @@
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>فروشگاه غذای خوشمزه</title>
-
-  <!-- اتصال فایل CSS -->
-  <link rel="stylesheet" href="./style.css">
-
-  <!-- اتصال فایل JavaScript -->
-  <script src="./script.js" defer></script>
+  <meta name="theme-color" content="#080908">
+  <title>Burger House | طعم متفاوت</title>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <header class="header">
-    <h1>🍔 غذای خوشمزه</h1>
-    <button id="cart-button" type="button">
-      🛒 سبد خرید
-      <span id="cart-count">۰</span>
+  <header class="navbar">
+    <a class="brand" href="#">
+      <span class="brand-icon">♨</span>
+      <span>BURGER <b>HOUSE</b></span>
+    </a>
+    <nav>
+      <a href="#home">خانه</a>
+      <a href="#journey">تجربه ما</a>
+      <a href="#menu">منو</a>
+    </nav>
+    <button class="cart-trigger" id="openCart" aria-label="سبد خرید">
+      🛒 <span id="cartCount">0</span>
     </button>
   </header>
 
-  <main class="container">
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-photo"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <p class="eyebrow">طعم واقعی، تجربه‌ای متفاوت</p>
+        <h1>به دنیای<br><span>برگر خوش آمدید</span></h1>
+        <p>از خیابان تا اولین گاز؛<br>تجربه‌ای متفاوت از سفارش غذا.</p>
+        <a class="gold-button" href="#journey">شروع تجربه <span>←</span></a>
+      </div>
+      <div class="scroll-hint"><span></span> اسکرول کنید</div>
+      <div class="hero-bottom">GOOD FOOD · GOOD MOOD</div>
+    </section>
 
-    <section id="menu-section">
-      <h2>منوی غذاها</h2>
-
-      <div class="products">
-
-        <article class="product">
-          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=85" alt="برگر">
-          <h3>🍔 برگر</h3>
-          <p>قیمت هر عدد: ۸ یورو</p>
-          <label for="qty-burger">تعداد:</label>
-          <input id="qty-burger" type="number" min="1" max="99" value="1">
-          <button class="add-button" data-id="burger" type="button">
-            افزودن به سبد خرید
-          </button>
-        </article>
-
-        <article class="product">
-          <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=85" alt="پیتزا">
-          <h3>🍕 پیتزا</h3>
-          <p>قیمت هر عدد: ۱۲ یورو</p>
-          <label for="qty-pizza">تعداد:</label>
-          <input id="qty-pizza" type="number" min="1" max="99" value="1">
-          <button class="add-button" data-id="pizza" type="button">
-            افزودن به سبد خرید
-          </button>
-        </article>
-
-        <article class="product">
-          <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=85" alt="سیب‌زمینی سرخ‌کرده">
-          <h3>🍟 سیب‌زمینی</h3>
-          <p>قیمت هر عدد: ۴ یورو</p>
-          <label for="qty-fries">تعداد:</label>
-          <input id="qty-fries" type="number" min="1" max="99" value="1">
-          <button class="add-button" data-id="fries" type="button">
-            افزودن به سبد خرید
-          </button>
-        </article>
-
+    <section class="journey" id="journey">
+      <div class="journey-sticky">
+        <div class="scene">
+          <div class="scene-image exterior"></div>
+          <div class="scene-image doorway"></div>
+          <div class="scene-image interior"></div>
+          <div class="scene-image counter"></div>
+          <div class="scene-vignette"></div>
+          <div class="scene-caption">
+            <span class="step-number" id="stepNumber">01</span>
+            <p class="eyebrow" id="sceneEyebrow">THE ENTRANCE</p>
+            <h2 id="sceneTitle">به رستوران نزدیک شوید</h2>
+            <p id="sceneDescription">یک تجربه متفاوت، همین‌جا شروع می‌شود.</p>
+          </div>
+          <div class="scene-progress"><span id="progressBar"></span></div>
+        </div>
       </div>
     </section>
 
-    <section id="cart-section" hidden>
-      <h2>🛒 سبد خرید شما</h2>
-
-      <div id="cart-items"></div>
-
-      <div class="total">
-        <p>تعداد کل: <strong id="total-count">۰</strong></p>
-        <p>مبلغ کل: <strong id="total-price">۰ یورو</strong></p>
+    <section class="menu-section" id="menu">
+      <div class="section-intro">
+        <p class="eyebrow">04 / OUR MENU</p>
+        <h2>انتخاب <span>خوشمزه</span> تو</h2>
+        <p>تازه، داغ و آماده برای اولین گاز.</p>
       </div>
-
-      <div class="cart-actions">
-        <button id="checkout-button" type="button">ادامه و پرداخت</button>
-        <button id="clear-button" type="button">خالی کردن سبد</button>
-        <button id="back-button" type="button">بازگشت به منو</button>
-      </div>
-
-      <p id="message" role="status" aria-live="polite"></p>
+      <div class="products" id="products"></div>
     </section>
 
+    <footer>
+      <a class="brand" href="#home">♨ BURGER HOUSE</a>
+      <p>خوشمزه‌تر از چیزی که فکر می‌کنی.</p>
+      <small>© 2026 Burger House</small>
+    </footer>
   </main>
 
-  <footer>با عشق برای دوستداران غذا ❤️</footer>
+  <div class="modal-backdrop" id="productBackdrop">
+    <div class="product-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="close-modal" data-close="productBackdrop" aria-label="بستن">×</button>
+      <img id="modalImage" src="" alt="">
+      <div class="modal-info">
+        <p class="eyebrow">BURGER HOUSE SELECTION</p>
+        <h2 id="modalTitle"></h2>
+        <p id="modalDescription"></p>
+        <strong class="modal-price" id="modalPrice"></strong>
+        <div class="quantity">
+          <button id="qtyMinus" aria-label="کم کردن">−</button>
+          <span id="qtyValue">1</span>
+          <button id="qtyPlus" aria-label="زیاد کردن">+</button>
+        </div>
+        <button class="gold-button full-button" id="addToCart">افزودن به سبد خرید</button>
+      </div>
+    </div>
+  </div>
 
+  <div class="modal-backdrop" id="cartBackdrop">
+    <div class="cart-modal" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+      <button class="close-modal" data-close="cartBackdrop" aria-label="بستن">×</button>
+      <p class="eyebrow">YOUR ORDER</p>
+      <h2 id="cartTitle">سبد خرید</h2>
+      <div id="cartItems"></div>
+      <div class="cart-total">
+        <span>مجموع</span>
+        <strong id="cartTotal">€0.00</strong>
+      </div>
+      <button class="gold-button full-button" id="checkout">ادامه سفارش ←</button>
+      <p class="cart-note">این نسخه نمایشی است؛ پرداخت واقعی فعال نیست.</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
