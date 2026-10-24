@@ -1,192 +1,323 @@
+const $ = (selector) => document.querySelector(selector);
 
-"use strict";
+const money = (value) => `€${value.toFixed(2)}`;
 
-// نام و قیمت غذاها
-const products = {
-  burger: { name: "برگر", price: 8 },
-  pizza: { name: "پیتزا", price: 12 },
-  fries: { name: "سیب‌زمینی", price: 4 }
-};
+const productsData = [
+  {
+    id: 1,
+    name: "برگر کلاسیک",
+    price: 5.99,
+    description: "گوشت گریل‌شده، پنیر چدار، کاهو، گوجه و سس مخصوص.",
+    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=85"
+  },
+  {
+    id: 2,
+    name: "سیب‌زمینی سرخ‌شده",
+    price: 2.99,
+    description: "سیب‌زمینی طلایی، ترد و تازه، همراه با ادویه مخصوص.",
+    image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=85"
+  },
+  {
+    id: 3,
+    name: "نوشابه خنک",
+    price: 2.50,
+    description: "نوشیدنی خنک برای کامل‌شدن تجربه غذای شما.",
+    image: "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?auto=format&fit=crop&w=900&q=85"
+  },
+  {
+    id: 4,
+    name: "دسر شکلاتی",
+    price: 4.50,
+    description: "کیک شکلاتی غنی با بافت نرم و طعمی فراموش‌نشدنی.",
+    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85"
+  }
+];
 
-// سبد خرید
-const cart = {};
+const cart = new Map();
+let selectedProduct = null;
+let quantity = 1;
 
-// پیدا کردن عناصر HTML
-const $ = (id) => document.getElementById(id);
+const sceneFrames = [
+  {
+    selector: ".exterior",
+    number: "01",
+    eyebrow: "THE ENTRANCE",
+    title: "به رستوران نزدیک شوید",
+    description: "ماجراجویی خوشمزه شما از همین‌جا شروع می‌شود."
+  },
+  {
+    selector: ".doorway",
+    number: "02",
+    eyebrow: "STEP INSIDE",
+    title: "درها را باز کنید",
+    description: "نور گرم، عطر غذا و یک فضای متفاوت."
+  },
+  {
+    selector: ".interior",
+    number: "03",
+    eyebrow: "THE EXPERIENCE",
+    title: "وارد دنیای طعم شوید",
+    description: "جایی برای لذت‌بردن از لحظه‌ها و طعم‌های تازه."
+  },
+  {
+    selector: ".counter",
+    number: "04",
+    eyebrow: "FRESHLY MADE",
+    title: "انتخاب خوشمزه تو",
+    description: "غذای مورد علاقه‌ات را انتخاب کن و سفارش بده."
+  }
+];
 
-const menuSection = $("menu-section");
-const cartSection = $("cart-section");
-const cartItems = $("cart-items");
-const message = $("message");
-
-const formatNumber = (number) =>
-  new Intl.NumberFormat("fa-IR").format(number);
-
-const formatPrice = (price) =>
-  `${formatNumber(price)} یورو`;
-
-function showMessage(text) {
-  message.textContent = text;
+/* ساخت کارت‌های منو */
+function renderProducts() {
+  $("#products").innerHTML = productsData.map(product => `
+    <article class="product-card">
+      <div class="product-image-wrap">
+        <img
+          class="product-image"
+          src="${product.image}"
+          alt="${product.name}"
+          loading="lazy"
+        >
+      </div>
+      <div class="product-details">
+        <h3>${product.name}</h3>
+        <p>${product.description}</p>
+        <div class="product-bottom">
+          <span class="product-price">${money(product.price)}</span>
+          <button
+            class="add-button"
+            data-product="${product.id}"
+            aria-label="مشاهده ${product.name}"
+          >+</button>
+        </div>
+      </div>
+    </article>
+  `).join("");
 }
 
-// نمایش و به‌روزرسانی سبد خرید
-function updateCart() {
-  const entries = Object.entries(cart)
-    .filter(([id, quantity]) => products[id] && quantity > 0);
+/* افکت حرکت دوربین */
+const journey = $(".journey");
+const frames = sceneFrames.map(frame => ({
+  ...frame,
+  element: $(frame.selector)
+}));
 
-  const totalCount = entries.reduce(
-    (sum, [, quantity]) => sum + quantity, 0
+const clamp = (value, min, max) =>
+  Math.min(max, Math.max(min, value));
+
+function smoothstep(value) {
+  const x = clamp(value, 0, 1);
+  return x * x * (3 - 2 * x);
+}
+
+let ticking = false;
+
+function updateJourney() {
+  ticking = false;
+
+  if (!journey) return;
+
+  const rect = journey.getBoundingClientRect();
+  const totalTravel = journey.offsetHeight - window.innerHeight;
+
+  if (totalTravel <= 0) return;
+
+  const progress = clamp(-rect.top / totalTravel, 0, 1);
+  const position = progress * (frames.length - 1);
+
+  frames.forEach((frame, index) => {
+    const distance = position - index;
+    const opacity = 1 - smoothstep(Math.abs(distance));
+
+    // حرکت نرم و نزدیک‌شدن دوربین به تصویر بعدی
+    const zoom = 1.04 + clamp(distance + 0.5, 0, 1) * 0.17;
+    const drift = clamp(distance, -1, 1) * 2.5;
+
+    frame.element.style.opacity = opacity.toFixed(3);
+    frame.element.style.transform =
+      `scale(${zoom}) translate3d(0, ${drift}%, 0)`;
+
+    // تغییر ظریف روشنایی در طول حرکت
+    frame.element.style.filter =
+      `brightness(${0.78 + opacity * 0.22})`;
+  });
+
+  const activeIndex = Math.min(
+    Math.floor(position + 0.5),
+    frames.length - 1
   );
 
-  const totalPrice = entries.reduce(
-    (sum, [id, quantity]) =>
-      sum + products[id].price * quantity, 0
+  const activeFrame = frames[activeIndex];
+
+  $("#stepNumber").textContent = activeFrame.number;
+  $("#sceneEyebrow").textContent = activeFrame.eyebrow;
+  $("#sceneTitle").textContent = activeFrame.title;
+  $("#sceneDescription").textContent = activeFrame.description;
+  $("#progressBar").style.width = `${progress * 100}%`;
+}
+
+function requestJourneyUpdate() {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(updateJourney);
+}
+
+window.addEventListener("scroll", requestJourneyUpdate, { passive: true });
+window.addEventListener("resize", requestJourneyUpdate);
+updateJourney();
+
+/* پنجره جزئیات محصول */
+function openProduct(id) {
+  selectedProduct = productsData.find(product => product.id === id);
+  if (!selectedProduct) return;
+
+  quantity = 1;
+
+  $("#modalImage").src = selectedProduct.image;
+  $("#modalImage").alt = selectedProduct.name;
+  $("#modalTitle").textContent = selectedProduct.name;
+  $("#modalDescription").textContent = selectedProduct.description;
+  $("#modalPrice").textContent = money(selectedProduct.price);
+  $("#qtyValue").textContent = quantity;
+
+  $("#productBackdrop").classList.add("open");
+}
+
+$("#products").addEventListener("click", event => {
+  const button = event.target.closest("[data-product]");
+  if (!button) return;
+
+  openProduct(Number(button.dataset.product));
+});
+
+$("#qtyMinus").addEventListener("click", () => {
+  quantity = Math.max(1, quantity - 1);
+  $("#qtyValue").textContent = quantity;
+});
+
+$("#qtyPlus").addEventListener("click", () => {
+  quantity = Math.min(99, quantity + 1);
+  $("#qtyValue").textContent = quantity;
+});
+
+/* افزودن محصول به سبد */
+$("#addToCart").addEventListener("click", () => {
+  if (!selectedProduct) return;
+
+  const id = selectedProduct.id;
+  const existing = cart.get(id);
+
+  cart.set(id, {
+    product: selectedProduct,
+    quantity: Math.min(99, (existing?.quantity || 0) + quantity)
+  });
+
+  closeModal("productBackdrop");
+  renderCart();
+});
+
+/* رندر سبد خرید */
+function renderCart() {
+  const items = [...cart.values()];
+
+  const count = items.reduce(
+    (sum, item) => sum + item.quantity,
+    0
   );
 
-  $("cart-count").textContent = formatNumber(totalCount);
-  $("total-count").textContent = formatNumber(totalCount);
-  $("total-price").textContent = formatPrice(totalPrice);
+  const total = items.reduce(
+    (sum, item) => sum + item.product.price * item.quantity,
+    0
+  );
 
-  cartItems.replaceChildren();
+  $("#cartCount").textContent = count;
+  $("#cartTotal").textContent = money(total);
 
-  if (entries.length === 0) {
-    const empty = document.createElement("p");
-    empty.textContent = "سبد خرید شما خالی است.";
-    cartItems.appendChild(empty);
+  if (items.length === 0) {
+    $("#cartItems").innerHTML =
+      '<p style="color:#aaa;text-align:center;padding:25px 0">سبد خرید شما خالی است.</p>';
     return;
   }
 
-  entries.forEach(([id, quantity]) => {
-    const product = products[id];
-
-    const item = document.createElement("div");
-    item.className = "cart-item";
-
-    const details = document.createElement("div");
-
-    const name = document.createElement("strong");
-    name.textContent = product.name;
-
-    const info = document.createElement("p");
-    info.textContent =
-      `${formatPrice(product.price)} × ${formatNumber(quantity)} = ${formatPrice(product.price * quantity)}`;
-
-    details.append(name, info);
-
-    const controls = document.createElement("div");
-
-    const minus = document.createElement("button");
-    minus.type = "button";
-    minus.textContent = "−";
-    minus.setAttribute("aria-label", `کم کردن ${product.name}`);
-    minus.addEventListener("click", () => changeQuantity(id, -1));
-
-    const count = document.createElement("strong");
-    count.textContent = formatNumber(quantity);
-
-    const plus = document.createElement("button");
-    plus.type = "button";
-    plus.textContent = "+";
-    plus.setAttribute("aria-label", `زیاد کردن ${product.name}`);
-    plus.addEventListener("click", () => changeQuantity(id, 1));
-
-    const remove = document.createElement("button");
-    remove.type = "button";
-    remove.className = "remove-button";
-    remove.textContent = "حذف";
-    remove.addEventListener("click", () => {
-      delete cart[id];
-      updateCart();
-      showMessage(`${product.name} از سبد حذف شد.`);
-    });
-
-    controls.append(minus, count, plus, remove);
-    item.append(details, controls);
-    cartItems.appendChild(item);
-  });
+  $("#cartItems").innerHTML = items.map(({ product, quantity }) => `
+    <div class="cart-row">
+      <img src="${product.image}" alt="${product.name}">
+      <div>
+        <h3>${product.name}</h3>
+        <small>${money(product.price * quantity)}</small>
+        <div class="cart-qty">
+          <button data-action="minus" data-id="${product.id}" aria-label="کم کردن">−</button>
+          <span>${quantity}</span>
+          <button data-action="plus" data-id="${product.id}" aria-label="زیاد کردن">+</button>
+        </div>
+      </div>
+      <button class="remove-item" data-action="remove" data-id="${product.id}" aria-label="حذف محصول">×</button>
+    </div>
+  `).join("");
 }
 
-// زیاد یا کم کردن تعداد یک غذا
-function changeQuantity(id, amount) {
-  if (!cart[id]) return;
+$("#cartItems").addEventListener("click", event => {
+  const button = event.target.closest("[data-action]");
+  if (!button) return;
 
-  cart[id] += amount;
+  const id = Number(button.dataset.id);
+  const item = cart.get(id);
+  if (!item) return;
 
-  if (cart[id] <= 0) {
-    delete cart[id];
+  switch (button.dataset.action) {
+    case "plus":
+      item.quantity = Math.min(99, item.quantity + 1);
+      break;
+
+    case "minus":
+      item.quantity -= 1;
+      if (item.quantity <= 0) cart.delete(id);
+      break;
+
+    case "remove":
+      cart.delete(id);
+      break;
   }
 
-  updateCart();
-  showMessage("سبد خرید به‌روز شد.");
+  renderCart();
+});
+
+/* باز و بسته‌کردن پنجره‌ها */
+function closeModal(id) {
+  $(`#${id}`).classList.remove("open");
 }
 
-// دکمه‌های افزودن به سبد خرید
-document.querySelectorAll(".add-button").forEach((button) => {
+$("#openCart").addEventListener("click", () => {
+  renderCart();
+  $("#cartBackdrop").classList.add("open");
+});
+
+document.querySelectorAll("[data-close]").forEach(button => {
   button.addEventListener("click", () => {
-    const id = button.dataset.id;
-    const input = $(`qty-${id}`);
-    const quantity = Number(input.value);
-
-    if (
-      !Number.isInteger(quantity) ||
-      quantity < 1 ||
-      quantity > 99
-    ) {
-      showMessage("لطفاً تعداد بین ۱ تا ۹۹ وارد کن.");
-      input.focus();
-      return;
-    }
-
-    cart[id] = (cart[id] || 0) + quantity;
-
-    updateCart();
-    showMessage(`${products[id].name} به سبد خرید اضافه شد.`);
+    closeModal(button.dataset.close);
   });
 });
 
-// باز کردن سبد خرید
-$("cart-button").addEventListener("click", () => {
-  menuSection.hidden = true;
-  cartSection.hidden = false;
-  updateCart();
-  showMessage("");
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
+document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
+  backdrop.addEventListener("click", event => {
+    if (event.target === backdrop) {
+      backdrop.classList.remove("open");
+    }
+  });
 });
 
-// برگشت به منو
-$("back-button").addEventListener("click", () => {
-  cartSection.hidden = true;
-  menuSection.hidden = false;
-  showMessage("");
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-// خالی کردن کامل سبد خرید
-$("clear-button").addEventListener("click", () => {
-  Object.keys(cart).forEach((id) => delete cart[id]);
-
-  updateCart();
-  showMessage("سبد خرید خالی شد.");
-});
-
-// دکمه پرداخت آزمایشی
-$("checkout-button").addEventListener("click", () => {
-  const total = Object.entries(cart).reduce(
-    (sum, [id, quantity]) =>
-      sum + products[id].price * quantity, 0
-  );
-
-  if (total === 0) {
-    showMessage("سبد خرید خالی است. اول غذا انتخاب کن.");
-    return;
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    document.querySelectorAll(".modal-backdrop").forEach(modal => {
+      modal.classList.remove("open");
+    });
   }
-
-  showMessage(
-    `سفارش شما آماده است. مبلغ نهایی: ${formatPrice(total)}. پرداخت واقعی هنوز فعال نیست.`
-  );
 });
 
-// آماده کردن سبد هنگام باز شدن سایت
-updateCart();
+$("#checkout").addEventListener("click", () => {
+  alert("این نسخه نمایشی است. برای ثبت سفارش واقعی، باید سیستم سفارش و پرداخت متصل شود.");
+});
+
+renderProducts();
+renderCart();
